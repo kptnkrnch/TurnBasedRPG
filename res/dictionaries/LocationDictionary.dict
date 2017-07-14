@@ -1,0 +1,11 @@
+BeginLocation:
+	id:1
+	name:Venus Beach
+	mapfile:Map04.map
+	mapworld:Venus
+	mapx:0
+	mapy:0
+	mapwidth:0
+	mapheight:0
+	hasbeenvisited:false
+EndLocation:

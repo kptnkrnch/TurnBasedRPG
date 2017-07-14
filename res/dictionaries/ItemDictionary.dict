@@ -1,0 +1,41 @@
+BeginItem:
+	id:1
+	name:Basic Gun
+	type:2
+	rarity:1
+	armor:0
+	damage:1
+	criticalchance:0
+	criticaldamage:0
+	freezingdamage:0
+	freezingchance:0
+	poisondamage:0
+	poisonchance:0
+	firedamage:0
+	firechance:0
+	stunchance:0
+	stuntime:0
+	slowchance:0
+	slowtime:0
+	dodgechance:0
+	attackspeed:1
+	healingamount:0
+	healingchance:0
+	maxuses:-1
+	usecount:0
+	fireresist:0
+	freezingresist:0
+	poisonresist:0
+	cureburningchance:0
+	curefreezingchance:0
+	curepoisonchance:0
+	abilitycooldowntime:0
+	currentcooldowntime:0
+	inventoryposition:0
+	isdroppable:true
+	isquestitem:false
+	isbanked:false
+	issold:false
+	isequipped:false
+	value:10
+EndItem:

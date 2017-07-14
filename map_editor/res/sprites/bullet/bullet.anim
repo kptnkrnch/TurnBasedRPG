@@ -1,0 +1,12 @@
+4
+right 1 0
+100 res/sprites/bullet/bullet_right/bullet_right_1.png
+
+left 1 0
+100 res/sprites/bullet/bullet_left/bullet_left_1.png
+
+up 1 0
+100 res/sprites/bullet/bullet_up/bullet_up_1.png
+
+down 1 0
+100 res/sprites/bullet/bullet_down/bullet_down_1.png

@@ -1,0 +1,48 @@
+8
+right 4 1
+300 res/sprites/player/walk_right/player_walk_right_1.png
+300 res/sprites/player/walk_right/player_walk_right_2.png
+300 res/sprites/player/walk_right/player_walk_right_3.png
+300 res/sprites/player/walk_right/player_walk_right_4.png
+
+left 4 1
+300 res/sprites/player/walk_left/player_walk_left_1.png
+300 res/sprites/player/walk_left/player_walk_left_2.png
+300 res/sprites/player/walk_left/player_walk_left_3.png
+300 res/sprites/player/walk_left/player_walk_left_4.png
+
+up 3 1
+300 res/sprites/player/walk_up/player_walk_up_1.png
+300 res/sprites/player/walk_up/player_walk_up_2.png
+300 res/sprites/player/walk_up/player_walk_up_3.png
+
+down 3 1
+300 res/sprites/player/walk_down/player_walk_down_1.png
+300 res/sprites/player/walk_down/player_walk_down_2.png
+300 res/sprites/player/walk_down/player_walk_down_3.png
+
+shoot_left 5 0
+150 res/sprites/player/shoot_left/player_shoot_left_1.png
+150 res/sprites/player/shoot_left/player_shoot_left_2.png
+150 res/sprites/player/shoot_left/player_shoot_left_3.png
+150 res/sprites/player/shoot_left/player_shoot_left_4.png
+150 res/sprites/player/shoot_left/player_shoot_left_5.png
+
+shoot_right 5 0
+150 res/sprites/player/shoot_right/player_shoot_right_1.png
+150 res/sprites/player/shoot_right/player_shoot_right_2.png
+150 res/sprites/player/shoot_right/player_shoot_right_3.png
+150 res/sprites/player/shoot_right/player_shoot_right_4.png
+150 res/sprites/player/shoot_right/player_shoot_right_5.png
+
+shoot_up 4 0
+200 res/sprites/player/shoot_up/player_shoot_up_1.png
+200 res/sprites/player/shoot_up/player_shoot_up_2.png
+200 res/sprites/player/shoot_up/player_shoot_up_3.png
+200 res/sprites/player/shoot_up/player_shoot_up_4.png
+
+shoot_down 4 0
+200 res/sprites/player/shoot_down/player_shoot_down_1.png
+200 res/sprites/player/shoot_down/player_shoot_down_2.png
+200 res/sprites/player/shoot_down/player_shoot_down_3.png
+200 res/sprites/player/shoot_down/player_shoot_down_4.png

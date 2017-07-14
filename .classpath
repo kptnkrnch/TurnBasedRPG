@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/libV2/jinput.jar"/>
+	<classpathentry kind="lib" path="lib/libV2/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/libV2/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="lib/libV2/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="TurnBasedRPG/lib/libV2/natives/windows"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/libV2/slick.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

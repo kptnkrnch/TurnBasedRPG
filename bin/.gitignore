@@ -1,0 +1,15 @@
+/engine/
+/entities/
+/entityproperties/
+/exceptions/
+/gameplay/
+/graphics/
+/input/
+/items/
+/locations/
+/network/
+/npc/
+/pathing/
+/quests/
+/savefiles/
+/sound/

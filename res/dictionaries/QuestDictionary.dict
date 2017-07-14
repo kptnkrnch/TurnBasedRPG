@@ -1,0 +1,30 @@
+BeginQuest:
+	id:1
+	givernpcid:-1
+	requireditems:-1
+	requireditemcount:-1
+	currentitems:-1
+	requiredconversations:-1
+	requiredlocationdiscoveries:-1
+	requiredenemytypes:-1
+	requiredkillcount:-1
+	currentkillcount:-1
+	rewardexp:0
+	rewardmoney:0
+	rewarditems:-1
+	subsequentquestid:-1
+	requiredpriorquestid:-1
+	turninnpcid:-1
+	recommendedlevel:1
+	minimumlevel:-1
+	maximumlevel:-1
+	questname:A Murder in Paradise
+	questdescription:The year is 2316; you are a detective on your way to the tropical world of Venus. A murder has occurred on the cruiseliner you are on. You are called in to investigate...
+	acquiredlocation:Venus Cruiseliner
+	turninlocation:-1
+	isactive:true
+	innerquests:-1
+	isprimaryquest:true
+	isinnerquest:false
+	iscomplete:false
+EndQuest:

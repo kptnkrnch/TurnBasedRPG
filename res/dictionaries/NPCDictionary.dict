@@ -1,0 +1,27 @@
+Describing an NPC
+NPC
+id
+name
+dialog multiple, therefore a sectional is required. needs to be tied to a quest
+in some situations, therefore pattern could be BeginDialog:QuestID: (-1 marks no quest)
+Dialog sometimes needs choices.
+
+starting sample
+
+undecided, make a dialog subfile in order to have dialog progression? or should I utilise the quest system? or just linear?
+
+BeginNPC:
+	id:
+	name:
+	BeginDialog:
+		quest:-1
+		text:
+		BeginChoice:
+			BeginOption:
+				name:
+				cost:
+				item:
+			EndOption:
+		EndChoice:
+	EndDialog:
+EndNPC:
