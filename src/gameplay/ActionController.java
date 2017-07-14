@@ -76,25 +76,25 @@ public class ActionController {
 			/* Gameplay Keys*/
 			if (Main.GetState() != States.MENU) {
 				for (int i = 0; i < world.GetEntityCount(); i++) {
-					if (input.get("KEY_INTERACT")) {
-						HandleInteractKey(world, input, i, fps_scaler);
+					if (input.get("KEY_SELECT")) {
+						HandleSelectKey(world, input, i, fps_scaler);
 					}
-					if (input.get("KEY_ATTACK")) {
-						HandleAttackKey(world, input, i, fps_scaler);
+					if (input.get("KEY_BACK")) {
+						HandleBackKey(world, input, i, fps_scaler);
 					}
 				}
 			} else {
-				if (input.get("KEY_INTERACT")) {
-					HandleInteractKey(world, input, -1, fps_scaler);
+				if (input.get("KEY_SELECT")) {
+					HandleSelectKey(world, input, -1, fps_scaler);
 				}
-				if (input.get("KEY_ATTACK")) {
-					HandleAttackKey(world, input, -1, fps_scaler);
+				if (input.get("KEY_BACK")) {
+					HandleBackKey(world, input, -1, fps_scaler);
 				}
 			}
 		}
 	}
 	
-	public static void HandleInteractKey(World world, HashMap<String, Boolean> input, int entityIndex, int fps_scaler) {
+	public static void HandleSelectKey(World world, HashMap<String, Boolean> input, int entityIndex, int fps_scaler) {
 		if (Main.GetState() != States.PAUSED && Main.GetState() != States.MENU) {
 			Entity e = world.GetEntity(entityIndex);
 			
@@ -184,7 +184,7 @@ public class ActionController {
 		}
 	}
 	
-	public static void HandleAttackKey(World world, HashMap<String, Boolean> input, int entityIndex, int fps_scaler) {
+	public static void HandleBackKey(World world, HashMap<String, Boolean> input, int entityIndex, int fps_scaler) {
 		if (Main.GetState() == States.RUNNING) {
 			Entity e = world.GetEntity(entityIndex);
 			

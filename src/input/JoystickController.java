@@ -69,7 +69,9 @@ public class JoystickController {
 				/* BUTTONS SECTION */
 				for (int i = 0; i < controller.getButtonCount(); i++) {
 					if (controller.isButtonPressed(i)) {
-						//System.out.println(controller.getButtonName(i));
+						if (Main.debug_mode) {
+							System.out.println(controller.getButtonName(i));
+						}
 						String command = joymap.get(i);
 						if (command != null && command.length() > 0) {
 							held_input.put(command, true);
