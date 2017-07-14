@@ -37,6 +37,8 @@ public class GUIController {
 	public static final String MENU_CONTROLS = "controls";
 	public static final String MENU_INVENTORY = "inventory";
 	public static final String MENU_LOADSAVES = "load_saves";
+	public static final String MENU_NONE = "none";
+	
 	public static final String SUBMENU_INVENTORY_ITEM = "inventory_item";
 	
 	public static int selectedControlField = -1;
@@ -66,7 +68,7 @@ public class GUIController {
 	
 	public static void DrawMenus(World world, Graphics g) {
 		if (Main.GetState() == States.RUNNING) {
-			SetCurrentMenu(GUIController.MENU_INFO_PANEL);
+			SetCurrentMenu(GUIController.MENU_NONE);
 		}
 		String menu = GetCurrentMenu();
 		if (menu != null) {

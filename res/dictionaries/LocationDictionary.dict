@@ -1,7 +1,8 @@
 BeginLocation:
 	id:1
 	name:Venus Beach
-	mapfile:Map04.map
+	mapfile:Map05.map
+	battlemapfile:BattleMap-Beach.map
 	mapworld:Venus
 	mapx:0
 	mapy:0

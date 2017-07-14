@@ -73,6 +73,11 @@ public class LocationLoader {
 								throw new Exception();
 							}
 							break;
+						case "battlemapfile":
+							svalue += "res/maps/";
+							svalue += lineScanner.next();
+							location.battlemapfile = svalue;
+							break;
 						}
 						lineScanner.close();
 					}
