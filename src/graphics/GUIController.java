@@ -37,9 +37,11 @@ public class GUIController {
 	public static final String MENU_CONTROLS = "controls";
 	public static final String MENU_INVENTORY = "inventory";
 	public static final String MENU_LOADSAVES = "load_saves";
+	public static final String MENU_BATTLE = "battle";
 	public static final String MENU_NONE = "none";
 	
 	public static final String SUBMENU_INVENTORY_ITEM = "inventory_item";
+	public static final String SUBMENU_BATTLE_OPTION = "battle_option";
 	
 	public static int selectedControlField = -1;
 	public static HashMap<String, Integer> tempKeyMap = new HashMap<String, Integer>();
@@ -98,6 +100,8 @@ public class GUIController {
 			switch(subMenu) {
 			case SUBMENU_INVENTORY_ITEM:
 				DrawInventoryItemMenu(world, g);
+				break;
+			case SUBMENU_BATTLE_OPTION:
 				break;
 			}
 		}

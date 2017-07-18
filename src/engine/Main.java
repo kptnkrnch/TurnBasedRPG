@@ -227,6 +227,10 @@ public class Main extends BasicGame {
 		if (debug && input.isKeyPressed(Input.KEY_F1)) {
 			debug_mode = !debug_mode;
 		}
+		if (debug && input.isKeyPressed(Input.KEY_F2)) {
+			Main.previous_state = Main.game_state;
+			Main.game_state = States.BATTLE;
+		}
 	}
 	
 	public static void SetState(int state) {

@@ -181,6 +181,72 @@ public class ActionController {
 				}
 				break;
 			}
+		} else if (Main.GetState() == States.BATTLE) {
+			if (GUIController.currentMenuName == GUIController.MENU_BATTLE) {
+				if (GUIController.subMenuName == null) {
+					current_delay = 0;
+					scroll_level = 0;
+					GUIController.SetSubMenu(GUIController.SUBMENU_BATTLE_OPTION);
+					int menuIndex = Main.world.FindMenu(GUIController.SUBMENU_BATTLE_OPTION);
+					Menu menu = Main.world.GetMenu(menuIndex);
+					menu.selectedItem = 0;
+					menu.menuitems = new ArrayList<MenuItem>();
+					
+					Item item = ItemInventory.GetCurrentItem();
+					int wordcount = 0;
+					if (item.type == ItemDictionary.TYPE_CONSUMABLE) {
+						MenuItem temp = new MenuItem("use", menu.x, menu.y + wordcount * 18, "use_item_option");
+						if (wordcount == 0) {
+							temp.Highlight();
+						}
+						menu.AddMenuItem(temp);
+						wordcount++;
+					}
+					if (item.type == ItemDictionary.TYPE_WEAPON || ItemDictionary.IsArmor(item)) {
+						if (item.isEquipped) {
+							MenuItem temp = new MenuItem("unequip", menu.x, menu.y + wordcount * 18, "unequip_item_option");
+							if (wordcount == 0) {
+								temp.Highlight();
+							}
+							menu.AddMenuItem(temp);
+						} else {
+							MenuItem temp = new MenuItem("equip", menu.x, menu.y + wordcount * 18, "equip_item_option");
+							if (wordcount == 0) {
+								temp.Highlight();
+							}
+							menu.AddMenuItem(temp);
+						}
+						wordcount++;
+					}
+					if (item.isDroppable) {
+						MenuItem temp = new MenuItem("drop", menu.x, menu.y + wordcount * 18, "drop_item_option");
+						if (wordcount == 0) {
+							temp.Highlight();
+						}
+						menu.AddMenuItem(temp);
+						wordcount++;
+					}
+					
+					MenuItem temp = new MenuItem("close", menu.x, menu.y + wordcount * 18, "close_item_option");
+					if (wordcount == 0) {
+						temp.Highlight();
+					}
+					menu.AddMenuItem(temp);
+					wordcount++;
+					
+					
+					Main.world.SetMenu(menuIndex, menu);
+					
+					if (wordcount == 0) {
+						GUIController.SetSubMenu(null);
+					}
+				} else {
+					int menuIndex = world.FindMenu(GUIController.GetCurrentSubmenu());
+					Menu menu = world.GetMenu(menuIndex);
+					MenuItem menuItem = menu.GetMenuItem(menu.selectedItem);
+					MenuOptionProcessor.HandleMenuOption(menuItem.Option());
+				}
+			}
 		}
 	}
 	
