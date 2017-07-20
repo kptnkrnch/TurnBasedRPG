@@ -24,6 +24,7 @@ import engine.MenuItem;
 import engine.States;
 import engine.World;
 import exceptions.PlayerNotFoundException;
+import gameplay.CombatSystem;
 
 public class GUIController {
 	
@@ -37,7 +38,7 @@ public class GUIController {
 	public static final String MENU_CONTROLS = "controls";
 	public static final String MENU_INVENTORY = "inventory";
 	public static final String MENU_LOADSAVES = "load_saves";
-	public static final String MENU_BATTLE = "battle";
+	public static final String MENU_BATTLE = "battle_menu";
 	public static final String MENU_NONE = "none";
 	
 	public static final String SUBMENU_INVENTORY_ITEM = "inventory_item";
@@ -72,6 +73,9 @@ public class GUIController {
 		if (Main.GetState() == States.RUNNING) {
 			SetCurrentMenu(GUIController.MENU_NONE);
 		}
+		if (Main.GetState() == States.BATTLE) {
+			SetCurrentMenu(GUIController.MENU_BATTLE);
+		}
 		String menu = GetCurrentMenu();
 		if (menu != null) {
 			switch(menu) {
@@ -93,6 +97,9 @@ public class GUIController {
 			case MENU_LOADSAVES:
 				DrawLoadSaveFileMenu(world, g);
 				break;
+			case MENU_BATTLE:
+				DrawBattleMenu(world, g);
+				break;
 			}
 		}
 		String subMenu = GetCurrentSubmenu();
@@ -102,6 +109,7 @@ public class GUIController {
 				DrawInventoryItemMenu(world, g);
 				break;
 			case SUBMENU_BATTLE_OPTION:
+				DrawBattleOptionsMenu(world, g);
 				break;
 			}
 		}
@@ -194,6 +202,48 @@ public class GUIController {
 		Menu temp = world.GetMenu(menuID);
 		if (temp != null && temp.background != null
 				&& Main.GetState() == States.MENU) {
+			
+			g.drawImage(temp.background, temp.x + GraphicsController.VIEWPORT_X, 
+					temp.y + GraphicsController.VIEWPORT_Y);
+			
+			for (int i = 0; i < temp.GetMenuItemCount(); i++) {
+				MenuItem item = temp.GetMenuItem(i);
+				if (item.IsHighlighted()) {
+					g.setColor(Color.black);
+				}
+				g.drawString(item.text, item.x + GraphicsController.VIEWPORT_X,
+						item.y + GraphicsController.VIEWPORT_Y);
+				g.setColor(Color.white);
+			}
+		}
+	}
+	
+	public static void DrawBattleMenu(World world, Graphics g) {
+		int menuID = world.FindMenu(MENU_BATTLE);
+		Menu temp = world.GetMenu(menuID);
+		if (temp != null && temp.background != null
+				&& Main.GetState() == States.BATTLE) {
+			
+			g.drawImage(temp.background, temp.x + GraphicsController.VIEWPORT_X, 
+					temp.y + GraphicsController.VIEWPORT_Y);
+			
+			/*for (int i = 0; i < temp.GetMenuItemCount(); i++) {
+				MenuItem item = temp.GetMenuItem(i);
+				if (item.IsHighlighted()) {
+					g.setColor(Color.black);
+				}
+				g.drawString(item.text, item.x + GraphicsController.VIEWPORT_X,
+						item.y + GraphicsController.VIEWPORT_Y);
+				g.setColor(Color.white);
+			}*/
+		}
+	}
+	
+	public static void DrawBattleOptionsMenu(World world, Graphics g) {
+		int menuID = world.FindMenu(SUBMENU_BATTLE_OPTION);
+		Menu temp = world.GetMenu(menuID);
+		if (temp != null && temp.background != null
+				&& Main.GetState() == States.BATTLE) {
 			
 			g.drawImage(temp.background, temp.x + GraphicsController.VIEWPORT_X, 
 					temp.y + GraphicsController.VIEWPORT_Y);

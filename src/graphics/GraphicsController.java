@@ -14,6 +14,7 @@ import engine.Direction;
 import engine.Entity;
 import engine.EntityDictionary;
 import engine.Main;
+import engine.States;
 import engine.Tile;
 import engine.TileFactory;
 import engine.World;
@@ -40,6 +41,9 @@ public class GraphicsController {
 			
 			HandleTileAnimations(world, g);
 			TileCollisionDebug(world, g);
+			
+			DrawPlayerBattlePositions(g);
+			DrawEnemyBattlePositions(g);
 			
 			HandleEntityAnimations(world, g);
 			EntityCollisionDebug(world, g);
@@ -320,6 +324,40 @@ public class GraphicsController {
 					}
 				}
 			}
+		}
+	}
+	
+	private static void DrawPlayerBattlePositions(Graphics g) {
+		if (Main.GetState() == States.BATTLE) {
+			Color oldColor = g.getColor();
+			for (int y = 0; y < 4; y++) {
+				for (int x = 0; x < 4; x++) {
+					g.drawRect(32 * x + 416, 32 * y + 96, 32, 32);
+					g.setColor(Color.black);
+					g.drawRect(32 * x + 417, 32 * y + 97, 30, 30);
+					g.setColor(Color.white);
+				}
+			}
+			g.setColor(Color.black);
+			g.drawRect(415, 95, 130, 130);
+			g.setColor(oldColor);
+		}
+	}
+	
+	private static void DrawEnemyBattlePositions(Graphics g) {
+		if (Main.GetState() == States.BATTLE) {
+			Color oldColor = g.getColor();
+			for (int y = 0; y < 4; y++) {
+				for (int x = 0; x < 4; x++) {
+					g.drawRect(32 * x + 96, 32 * y + 96, 32, 32);
+					g.setColor(Color.black);
+					g.drawRect(32 * x + 97, 32 * y + 97, 30, 30);
+					g.setColor(Color.white);
+				}
+			}
+			g.setColor(Color.black);
+			g.drawRect(95, 95, 130, 130);
+			g.setColor(oldColor);
 		}
 	}
 	

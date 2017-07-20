@@ -160,6 +160,7 @@ public class Main extends BasicGame {
 			System.exit(0);
 		}
 		MapLoader.LoadMap(world, loc.mapfile);
+		world.currentLocationID = loc.id;
 		
 		InputController.LoadKeyMapping("res/config/keymap.conf");
 		String controller_name = JoystickController.LoadKeyMapping("res/config/joymap.conf");
@@ -221,6 +222,9 @@ public class Main extends BasicGame {
 			CombatSystem.UpdateSpawnTimers(world, fps_scaler);
 			QuestHandler.UpdateQuestStatuses();
 		}
+		if (GetState() == States.BATTLE) {
+			CombatSystem.HandleBattleTurns(world);
+		}
 		EffectsController.UpdateEffects(fps_scaler);
 		ItemHandler.CleanUpInventory();
 		
@@ -230,6 +234,8 @@ public class Main extends BasicGame {
 		if (debug && input.isKeyPressed(Input.KEY_F2)) {
 			Main.previous_state = Main.game_state;
 			Main.game_state = States.BATTLE;
+			Location loc = LocationDictionary.GetLocationByID(world.currentLocationID);
+			MapLoader.LoadMap(world, loc.battlemapfile);
 		}
 	}
 	

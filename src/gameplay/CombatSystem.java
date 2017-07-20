@@ -5,8 +5,17 @@ import engine.Entity;
 import engine.EntityDictionary;
 import engine.World;
 import entities.Enemy;
+import graphics.GUIController;
 
 public class CombatSystem {
+	
+	public static int CURRENT_TURN = 0;
+	
+	public static void HandleBattleTurns(World world) {
+		if (CURRENT_TURN == 0) {
+			GUIController.SetSubMenu(GUIController.SUBMENU_BATTLE_OPTION);
+		}
+	}
 	
 	public static void UpdateCooldowns(World world, int fps_scaler) {
 		for (int i = 0; i < world.GetEntityCount(); i++) {

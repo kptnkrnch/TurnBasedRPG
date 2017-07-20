@@ -42,6 +42,11 @@ public class MenuOptionProcessor {
 	public static final String DROP_ITEM_OPTION = "drop_item_option";
 	public static final String CLOSE_ITEM_OPTION = "close_item_option";
 	
+	/* Submenu Battle Options */
+	public static final String BATTLE_ABILITIES_OPTION = "battle_abilities_option";
+	public static final String BATTLE_ITEMS_OPTION = "battle_items_option";
+	public static final String BATTLE_FLEE_OPTION = "battle_flee_option";
+	
 	public static void HandleMenuOption(String option) {
 		if (option != null && option.length() > 0) {
 			switch(GUIController.GetCurrentMenu()) {
@@ -56,6 +61,9 @@ public class MenuOptionProcessor {
 				switch(GUIController.subMenuName) {
 				case GUIController.SUBMENU_INVENTORY_ITEM:
 					HandleInventoryItemOption(option);
+					break;
+				case GUIController.SUBMENU_BATTLE_OPTION:
+					HandleBattleOption(option);
 					break;
 				}
 			}
@@ -220,6 +228,41 @@ public class MenuOptionProcessor {
 				break;
 			case CLOSE_ITEM_OPTION:
 				GUIController.SetSubMenu(null);
+				break;
+			}
+		}
+	}
+	
+	public static void HandleBattleOption(String option) {
+		if (option != null && option.length() > 0) {
+			int index = -1;
+			boolean success = false;
+			switch(option) {
+			case BATTLE_ABILITIES_OPTION:
+				//success = false;
+				//Item item = ItemInventory.GetCurrentItem();
+				
+				//success = ItemHandler.UseItem(item);
+				
+				//if (success && item.maxUses > 0 && item.useCount <= item.maxUses) {
+				//	item.IncreaseUseCount();
+					//System.out.println("INCREASED");
+				//}
+				
+				//ItemInventory.SetCurrentItem(item);
+				//GUIController.SetSubMenu(null);
+				break;
+			case BATTLE_ITEMS_OPTION:
+				//success = false;
+				//index = ItemInventory.currentPosition;
+				//ItemHandler.UnEquipItem(index);
+				//GUIController.SetSubMenu(null);
+				break;
+			case BATTLE_FLEE_OPTION:
+				//success = false;
+				//index = ItemInventory.currentPosition;
+				//ItemHandler.EquipItem(index);
+				//GUIController.SetSubMenu(null);
 				break;
 			}
 		}

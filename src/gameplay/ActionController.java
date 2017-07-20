@@ -192,7 +192,7 @@ public class ActionController {
 					menu.selectedItem = 0;
 					menu.menuitems = new ArrayList<MenuItem>();
 					
-					Item item = ItemInventory.GetCurrentItem();
+					/*Item item = ItemInventory.GetCurrentItem();
 					int wordcount = 0;
 					if (item.type == ItemDictionary.TYPE_CONSUMABLE) {
 						MenuItem temp = new MenuItem("use", menu.x, menu.y + wordcount * 18, "use_item_option");
@@ -239,7 +239,7 @@ public class ActionController {
 					
 					if (wordcount == 0) {
 						GUIController.SetSubMenu(null);
-					}
+					}*/
 				} else {
 					int menuIndex = world.FindMenu(GUIController.GetCurrentSubmenu());
 					Menu menu = world.GetMenu(menuIndex);
@@ -336,6 +336,21 @@ public class ActionController {
 				SaveLoader.MoveCursorUp();
 				break;
 			}
+		} else if (Main.GetState() == States.BATTLE) {
+			Menu temp = null;
+			int tempMenuIndex = -1;
+			switch(GUIController.GetCurrentMenu()) {
+			case GUIController.MENU_BATTLE:
+				if (GUIController.subMenuName == null) {
+					ItemInventory.MoveCursorUp();
+				} else {
+					tempMenuIndex = world.FindMenu(GUIController.GetCurrentSubmenu());
+					temp = world.GetMenu(tempMenuIndex);
+					temp.DecrementMenuItem();
+					world.SetMenu(tempMenuIndex, temp);
+				}
+				break;
+			}
 		}
 	}
 	
@@ -370,6 +385,21 @@ public class ActionController {
 				break;
 			case GUIController.MENU_LOADSAVES:
 				SaveLoader.MoveCursorDown();
+				break;
+			}
+		} else if (Main.GetState() == States.BATTLE) {
+			Menu temp = null;
+			int tempMenuIndex = -1;
+			switch(GUIController.GetCurrentMenu()) {
+			case GUIController.MENU_BATTLE:
+				if (GUIController.subMenuName == null) {
+					ItemInventory.MoveCursorDown();
+				} else {
+					tempMenuIndex = world.FindMenu(GUIController.GetCurrentSubmenu());
+					temp = world.GetMenu(tempMenuIndex);
+					temp.IncrementMenuItem();
+					world.SetMenu(tempMenuIndex, temp);
+				}
 				break;
 			}
 		}

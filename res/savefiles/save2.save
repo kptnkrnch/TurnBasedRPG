@@ -3,7 +3,7 @@ PlayerData:
 	y:32
 	width:30
 	height:30
-	locationid:0
+	locationid:1
 	maxhealth:100
 	health:50
 	attack:10
