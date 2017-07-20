@@ -96,6 +96,18 @@ public class Menu {
 		}
 	}
 	
+	public void ResetMenuItemHighlight() {
+		if (GetMenuItemCount() > 0) {
+			MenuItem temp = GetMenuItem(selectedItem);
+			temp.DeHighlight();
+			SetMenuItem(selectedItem, temp);
+			selectedItem = 0;
+			temp = GetMenuItem(selectedItem);
+			temp.Highlight();
+			SetMenuItem(selectedItem, temp);
+		}
+	}
+	
 	public static MenuItem CreateMenuItem(String text, int x, int y, String goesTo) {
 		MenuItem item = new MenuItem(text, x, y, goesTo);
 		return item;

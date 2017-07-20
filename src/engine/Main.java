@@ -65,7 +65,7 @@ public class Main extends BasicGame {
 	public static boolean debug_mode = false;
 	public static Controller controller = null;
 	public static boolean FULLSCREEN = false;
-	public static boolean VSYNC = true;
+	public static boolean VSYNC = false;
 	public static boolean SHOWFPS = false;
 	
 	//public static Font font;
@@ -144,10 +144,14 @@ public class Main extends BasicGame {
 		font = new AngelCodeFont("res/fonts/minecraftia.fnt", font_image);
 		
 		world = new World();
+		CombatSystem.battleWorld = new World();
 		world.LoadTileDictionary("res/dictionaries/TileDictionary.dict");
+		CombatSystem.battleWorld.LoadTileDictionary("res/dictionaries/TileDictionary.dict");
 		world.LoadEntityDictionary("res/dictionaries/EntityDictionary.dict");
+		CombatSystem.battleWorld.LoadEntityDictionary("res/dictionaries/EntityDictionary.dict");
 		world.AddEntity(EntityFactory.CreateEntity(world, EntityDictionary.PLAYER, 288, 32, 32, 32));
 		world.AddEntity(EntityFactory.CreateEntity(world, EntityDictionary.CAMERA, ResX / 2, ResY / 2, 32, 32));
+		CombatSystem.battleWorld.AddEntity(EntityFactory.CreateEntity(world, EntityDictionary.CAMERA, ResX / 2, ResY / 2, 32, 32));
 		
 		SaveLoader.LoadSaveFile("save1.save");
 		
@@ -160,7 +164,9 @@ public class Main extends BasicGame {
 			System.exit(0);
 		}
 		MapLoader.LoadMap(world, loc.mapfile);
+		MapLoader.LoadMap(CombatSystem.battleWorld, loc.battlemapfile);
 		world.currentLocationID = loc.id;
+		CombatSystem.battleWorld.currentLocationID = loc.id;
 		
 		InputController.LoadKeyMapping("res/config/keymap.conf");
 		String controller_name = JoystickController.LoadKeyMapping("res/config/joymap.conf");
@@ -180,6 +186,7 @@ public class Main extends BasicGame {
 		//Menu menu = new Menu("info_panel", "res/gui/info_panel.png", 0, 0, 400, 96);
 		//world.AddMenu(menu);
 		world.menus = Menu.LoadMenus("res/config/menus.conf");
+		CombatSystem.battleWorld.menus = Menu.LoadMenus("res/config/menus.conf");
 		//npc.dialog = new ArrayList<String>();
 		//npc.dialog.add("Hello World");
 		//world.AddEntity(npc);
@@ -208,6 +215,10 @@ public class Main extends BasicGame {
 		if (!SoundController.IsPlaying()) {
 			//SoundController.PlayMusic(true);
 		}
+		if (GetPreviousState() == States.BATTLE) { // NOTE: may want to replace current state and previous state with a stack (like was done with menus)
+			CombatSystem.CleanupBattleWorld();
+		}
+		
 		Input input = gc.getInput();
 		HashMap<String, Boolean> held_keys = InputController.HandleHeldInput(input, controller);
 		HashMap<String, Boolean> pressed_keys = InputController.HandlePressedInput(input, controller);
@@ -223,6 +234,7 @@ public class Main extends BasicGame {
 			QuestHandler.UpdateQuestStatuses();
 		}
 		if (GetState() == States.BATTLE) {
+			CombatSystem.InitBattleWorld(world);
 			CombatSystem.HandleBattleTurns(world);
 		}
 		EffectsController.UpdateEffects(fps_scaler);
@@ -232,10 +244,21 @@ public class Main extends BasicGame {
 			debug_mode = !debug_mode;
 		}
 		if (debug && input.isKeyPressed(Input.KEY_F2)) {
-			Main.previous_state = Main.game_state;
-			Main.game_state = States.BATTLE;
-			Location loc = LocationDictionary.GetLocationByID(world.currentLocationID);
-			MapLoader.LoadMap(world, loc.battlemapfile);
+			if (GetState() == States.RUNNING) {
+				Main.previous_state = Main.game_state;
+				Main.game_state = States.BATTLE;
+			} else if (GetState() == States.BATTLE) {
+				Main.previous_state = Main.game_state;
+				Main.game_state = States.RUNNING;
+			}
+			//Location loc = LocationDictionary.GetLocationByID(world.currentLocationID);
+			//MapLoader.LoadMap(world, loc.battlemapfile);
+		}
+		if (debug && input.isKeyPressed(Input.KEY_F3)) {
+			System.out.println("Menu Queue:");
+			for (int i = 0; i < GUIController.menuQueue.size(); i++) {
+				System.out.println(GUIController.menuQueue.get(i));
+			}
 		}
 	}
 	

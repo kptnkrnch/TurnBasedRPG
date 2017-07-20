@@ -57,8 +57,10 @@ public class MenuOptionProcessor {
 				HandleControlMenuOption(option);
 				break;
 			}
-			if (GUIController.subMenuName != null) {
-				switch(GUIController.subMenuName) {
+			//if (GUIController.subMenuName != null) {
+			if (GUIController.GetCurrentSubmenu() != GUIController.MENU_NONE) {
+				//switch(GUIController.subMenuName) {
+				switch(GUIController.GetCurrentSubmenu()) {
 				case GUIController.SUBMENU_INVENTORY_ITEM:
 					HandleInventoryItemOption(option);
 					break;
@@ -165,7 +167,7 @@ public class MenuOptionProcessor {
 				break;
 			case BACK_OPTION:
 				GUIController.selectedControlField = -1;
-				GUIController.SetCurrentMenu(GUIController.previousMenuName);
+				GUIController.SetCurrentMenu(GUIController.GetPreviousMenu());
 				InputController.SetKeyMap(GUIController.tempKeyMap);
 				
 				file = java.nio.file.Paths.get("res/config/keymap.conf");
@@ -207,27 +209,32 @@ public class MenuOptionProcessor {
 				}
 				
 				ItemInventory.SetCurrentItem(item);
-				GUIController.SetSubMenu(null);
+				//GUIController.SetSubMenu(null);
+				GUIController.ExitSubmenus();
 				break;
 			case UNEQUIP_ITEM_OPTION:
 				success = false;
 				index = ItemInventory.currentPosition;
 				ItemHandler.UnEquipItem(index);
-				GUIController.SetSubMenu(null);
+				//GUIController.SetSubMenu(null);
+				GUIController.ExitSubmenus();
 				break;
 			case EQUIP_ITEM_OPTION:
 				success = false;
 				index = ItemInventory.currentPosition;
 				ItemHandler.EquipItem(index);
-				GUIController.SetSubMenu(null);
+				//GUIController.SetSubMenu(null);
+				GUIController.ExitSubmenus();
 				break;
 			case DROP_ITEM_OPTION:
 				success = false;
 				ItemHandler.DropCurrentItem();
-				GUIController.SetSubMenu(null);
+				//GUIController.SetSubMenu(null);
+				GUIController.ExitSubmenus();
 				break;
 			case CLOSE_ITEM_OPTION:
-				GUIController.SetSubMenu(null);
+				//GUIController.SetSubMenu(null);
+				GUIController.ExitSubmenus();
 				break;
 			}
 		}

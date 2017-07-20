@@ -36,7 +36,7 @@ public class ActionController {
 				HandleInventoryKey(world);
 			}
 			if ((GUIController.GetCurrentMenu() == GUIController.MENU_INVENTORY && 
-					GUIController.GetCurrentSubmenu() == null) || 
+					GUIController.GetCurrentSubmenu() == GUIController.MENU_NONE) || 
 					GUIController.GetCurrentMenu() == GUIController.MENU_LOADSAVES) {
 				if (input.get("KEY_UP") || (held_input.get("KEY_UP") && !input.get("KEY_UP"))) {
 					if (current_delay <= 0) {
@@ -105,9 +105,9 @@ public class ActionController {
 				break;
 			}
 		} else if (Main.GetState() == States.MENU) {
-			switch(GUIController.currentMenuName) {
+			switch(GUIController.GetCurrentMenu()) {
 			case GUIController.MENU_INVENTORY:
-				if (GUIController.subMenuName == null) {
+				if (GUIController.GetCurrentSubmenu() == GUIController.MENU_NONE) {
 					current_delay = 0;
 					scroll_level = 0;
 					GUIController.SetSubMenu(GUIController.SUBMENU_INVENTORY_ITEM);
@@ -162,7 +162,8 @@ public class ActionController {
 					Main.world.SetMenu(menuIndex, menu);
 					
 					if (wordcount == 0) {
-						GUIController.SetSubMenu(null);
+						//GUIController.SetSubMenu(null);
+						GUIController.ExitSubmenus();
 					}
 				} else {
 					int menuIndex = world.FindMenu(GUIController.GetCurrentSubmenu());
@@ -177,13 +178,14 @@ public class ActionController {
 				if (savePath.contains(".save")) {
 					SaveLoader.LoadSaveFile(savePath);
 					Main.SetState(States.RUNNING);
-					GUIController.SetCurrentMenu(null);
+					//GUIController.SetCurrentMenu(null);
+					GUIController.ExitMenus();
 				}
 				break;
 			}
 		} else if (Main.GetState() == States.BATTLE) {
 			if (GUIController.currentMenuName == GUIController.MENU_BATTLE) {
-				if (GUIController.subMenuName == null) {
+				if (GUIController.GetCurrentSubmenu() == GUIController.MENU_NONE) {
 					current_delay = 0;
 					scroll_level = 0;
 					GUIController.SetSubMenu(GUIController.SUBMENU_BATTLE_OPTION);
@@ -261,7 +263,7 @@ public class ActionController {
 				break;
 			}
 		} else if (Main.GetState() == States.MENU) {
-			if (GUIController.currentMenuName.equals(GUIController.MENU_INVENTORY) && GUIController.subMenuName != null) {
+			if (GUIController.GetCurrentMenu().equals(GUIController.MENU_INVENTORY) && GUIController.GetCurrentSubmenu() != GUIController.MENU_NONE) {
 				int menuIndex = Main.world.FindMenu(GUIController.SUBMENU_INVENTORY_ITEM);
 				Menu menu = Main.world.GetMenu(menuIndex);
 				menu.menuitems = new ArrayList<MenuItem>();
@@ -269,8 +271,9 @@ public class ActionController {
 				
 				Main.world.SetMenu(menuIndex, menu);
 				
-				GUIController.SetSubMenu(null);
-			} else if (GUIController.currentMenuName.equals(GUIController.MENU_INVENTORY) && GUIController.subMenuName == null) {
+				//GUIController.SetSubMenu(null);
+				GUIController.ExitSubmenus();
+			} else if (GUIController.GetCurrentMenu().equals(GUIController.MENU_INVENTORY) && GUIController.GetCurrentSubmenu() == GUIController.MENU_NONE) {
 				Main.SetState(Main.previous_state);
 			}
 		}
@@ -279,16 +282,19 @@ public class ActionController {
 	public static void HandleMenuKey(World world) {
 		if (Main.GetState() != States.MENU) {
 			Main.SetState(States.MENU);
+			GUIController.ExitMenus();
 			GUIController.SetCurrentMenu(GUIController.MENU_MAIN);
-		} else if (Main.GetState() == States.MENU){
-			int menuIndex = world.FindMenu(GUIController.GetCurrentMenu());
-			Menu menu = world.GetMenu(menuIndex);
-			if (menu != null) {
-				MenuItem menuItem = menu.GetMenuItem(menu.selectedItem);
-				MenuOptionProcessor.HandleMenuOption(menuItem.Option());
-			}
+		//} else if (Main.GetState() == States.MENU){
+		//	int menuIndex = world.FindMenu(GUIController.GetCurrentMenu());
+		//	Menu menu = world.GetMenu(menuIndex);
+		//	if (menu != null) {
+		//		MenuItem menuItem = menu.GetMenuItem(menu.selectedItem);
+		//		MenuOptionProcessor.HandleMenuOption(menuItem.Option());
+		//	}
 		} else {
-			GUIController.SetSubMenu(null);
+			//GUIController.SetSubMenu(null);
+			GUIController.ExitMenus();
+			GUIController.ExitSubmenus();
 			Main.SetState(Main.previous_state);
 		}
 	}
@@ -296,9 +302,12 @@ public class ActionController {
 	public static void HandleInventoryKey(World world) {
 		if (Main.GetState() != States.MENU) {
 			Main.SetState(States.MENU);
+			GUIController.ExitMenus();
 			GUIController.SetCurrentMenu(GUIController.MENU_INVENTORY);
 		} else {
-			GUIController.SetSubMenu(null);
+			//GUIController.SetSubMenu(null);
+			GUIController.ExitMenus();
+			GUIController.ExitSubmenus();
 			Main.SetState(Main.previous_state);
 		}
 	}
@@ -323,7 +332,8 @@ public class ActionController {
 				}
 				break;
 			case GUIController.MENU_INVENTORY:
-				if (GUIController.subMenuName == null) {
+				//if (GUIController.subMenuName == null) {
+				if (GUIController.GetCurrentSubmenu() == GUIController.MENU_NONE) {
 					ItemInventory.MoveCursorUp();
 				} else {
 					tempMenuIndex = world.FindMenu(GUIController.GetCurrentSubmenu());
@@ -341,7 +351,8 @@ public class ActionController {
 			int tempMenuIndex = -1;
 			switch(GUIController.GetCurrentMenu()) {
 			case GUIController.MENU_BATTLE:
-				if (GUIController.subMenuName == null) {
+				//if (GUIController.subMenuName == null) {
+				if (GUIController.GetCurrentSubmenu() == GUIController.MENU_NONE) {
 					ItemInventory.MoveCursorUp();
 				} else {
 					tempMenuIndex = world.FindMenu(GUIController.GetCurrentSubmenu());
@@ -374,7 +385,8 @@ public class ActionController {
 				}
 				break;
 			case GUIController.MENU_INVENTORY:
-				if (GUIController.subMenuName == null) {
+				//if (GUIController.subMenuName == null) {
+				if (GUIController.GetCurrentSubmenu() == GUIController.MENU_NONE) {
 					ItemInventory.MoveCursorDown();
 				} else {
 					tempMenuIndex = world.FindMenu(GUIController.GetCurrentSubmenu());
@@ -392,7 +404,8 @@ public class ActionController {
 			int tempMenuIndex = -1;
 			switch(GUIController.GetCurrentMenu()) {
 			case GUIController.MENU_BATTLE:
-				if (GUIController.subMenuName == null) {
+				//if (GUIController.subMenuName == null) {
+				if (GUIController.GetCurrentSubmenu() == GUIController.MENU_NONE) {
 					ItemInventory.MoveCursorDown();
 				} else {
 					tempMenuIndex = world.FindMenu(GUIController.GetCurrentSubmenu());

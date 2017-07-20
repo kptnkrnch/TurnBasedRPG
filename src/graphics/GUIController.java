@@ -7,6 +7,7 @@ import items.ItemInventory;
 
 import java.awt.Rectangle;
 import java.util.HashMap;
+import java.util.Stack;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -32,6 +33,9 @@ public class GUIController {
 	public static String previousMenuName = null;
 	public static String subMenuName = null;
 	
+	public static Stack<String> menuQueue = new Stack<String>();
+	public static Stack<String> submenuQueue = new Stack<String>();
+	
 	public static final String MENU_MAIN = "main";
 	public static final String MENU_INFO_PANEL = "info_panel";
 	public static final String MENU_PAUSE = "pause";
@@ -49,35 +53,97 @@ public class GUIController {
 	public static HashMap<String, Integer> tempJoyMap = new HashMap<String, Integer>();
 	
 	public static void SetCurrentMenu(String menu) {
-		previousMenuName = currentMenuName;
-		currentMenuName = menu;
+		//previousMenuName = currentMenuName;
+		//currentMenuName = menu;
+		menuQueue.push(menu);
+	}
+	
+	public static void ExitSubmenus() {
+		while (!submenuQueue.empty()) {
+			Menu temp = null;
+			int tempMenuIndex = Main.world.FindMenu(submenuQueue.pop());
+			temp = Main.world.GetMenu(tempMenuIndex);
+			if (temp != null) {
+				temp.ResetMenuItemHighlight();
+				Main.world.SetMenu(tempMenuIndex, temp);
+			}
+		}
+	}
+	
+	public static void ExitMenus() {
+		while (!menuQueue.empty()) {
+			Menu temp = null;
+			int tempMenuIndex = Main.world.FindMenu(menuQueue.pop());
+			temp = Main.world.GetMenu(tempMenuIndex);
+			if (temp != null) {
+				temp.ResetMenuItemHighlight();
+				Main.world.SetMenu(tempMenuIndex, temp);
+			}
+		}
 	}
 	
 	public static void SetSubMenu(String menu) {
-		subMenuName = menu;
+		//subMenuName = menu;
+		submenuQueue.push(menu);
 	}
 	
 	public static String GetCurrentMenu() {
-		return currentMenuName;
+		//return currentMenuName;
+		if (menuQueue.empty()) {
+			return MENU_NONE;
+		}
+		return menuQueue.peek();
 	}
 	
 	public static String GetCurrentSubmenu() {
-		return subMenuName;
+		//return subMenuName;
+		if (submenuQueue.empty()) {
+			return MENU_NONE;
+		}
+		return submenuQueue.peek();
 	}
 	
 	public static String GetPreviousMenu() {
-		return previousMenuName;
+		Menu temp = null;
+		int tempMenuIndex = Main.world.FindMenu(menuQueue.pop());
+		temp = Main.world.GetMenu(tempMenuIndex);
+		if (temp != null) {
+			temp.ResetMenuItemHighlight();
+			Main.world.SetMenu(tempMenuIndex, temp);
+		}
+		if (menuQueue.empty()) {
+			return MENU_NONE;
+		}
+		return menuQueue.peek();
+		//return previousMenuName;
+	}
+	
+	public static String GetPreviousSubMenu() {
+		Menu temp = null;
+		int tempMenuIndex = Main.world.FindMenu(submenuQueue.pop());
+		temp = Main.world.GetMenu(tempMenuIndex);
+		if (temp != null) {
+			temp.ResetMenuItemHighlight();
+			Main.world.SetMenu(tempMenuIndex, temp);
+		}
+		if (submenuQueue.empty()) {
+			return MENU_NONE;
+		}
+		return submenuQueue.peek();
+		//return previousMenuName;
 	}
 	
 	public static void DrawMenus(World world, Graphics g) {
-		if (Main.GetState() == States.RUNNING) {
+		if (Main.GetState() == States.RUNNING && GUIController.GetCurrentMenu() != GUIController.MENU_NONE) {
+			ExitMenus();
 			SetCurrentMenu(GUIController.MENU_NONE);
 		}
-		if (Main.GetState() == States.BATTLE) {
+		if (Main.GetState() == States.BATTLE && GUIController.GetCurrentMenu() != GUIController.MENU_BATTLE) {
+			ExitMenus();
 			SetCurrentMenu(GUIController.MENU_BATTLE);
 		}
 		String menu = GetCurrentMenu();
-		if (menu != null) {
+		if (menu != GUIController.MENU_NONE) {
 			switch(menu) {
 			case MENU_MAIN:
 				DrawMainMenu(world, g);
@@ -103,7 +169,7 @@ public class GUIController {
 			}
 		}
 		String subMenu = GetCurrentSubmenu();
-		if (subMenu != null) {
+		if (subMenu != GUIController.MENU_NONE) {
 			switch(subMenu) {
 			case SUBMENU_INVENTORY_ITEM:
 				DrawInventoryItemMenu(world, g);

@@ -3,6 +3,7 @@ package gameplay;
 import pathing.PathFinder;
 import engine.Entity;
 import engine.EntityDictionary;
+import engine.Main;
 import engine.World;
 import entities.Enemy;
 import graphics.GUIController;
@@ -10,9 +11,25 @@ import graphics.GUIController;
 public class CombatSystem {
 	
 	public static int CURRENT_TURN = 0;
+	public static World overWorld = null;
+	public static World battleWorld = null;
+	
+	public static void InitBattleWorld(World oldWorld) {
+		if (oldWorld != null && battleWorld != null && oldWorld != battleWorld) {
+			overWorld = oldWorld;
+			Main.world = battleWorld;
+		}
+	}
+	
+	public static void CleanupBattleWorld() {
+		if (overWorld != null) {
+			GUIController.ExitSubmenus();
+			Main.world = overWorld;
+		}
+	}
 	
 	public static void HandleBattleTurns(World world) {
-		if (CURRENT_TURN == 0) {
+		if (CURRENT_TURN == 0 && GUIController.GetCurrentSubmenu() != GUIController.SUBMENU_BATTLE_OPTION) {
 			GUIController.SetSubMenu(GUIController.SUBMENU_BATTLE_OPTION);
 		}
 	}
