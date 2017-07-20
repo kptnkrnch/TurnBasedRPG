@@ -274,7 +274,9 @@ public class ActionController {
 				//GUIController.SetSubMenu(null);
 				GUIController.ExitSubmenus();
 			} else if (GUIController.GetCurrentMenu().equals(GUIController.MENU_INVENTORY) && GUIController.GetCurrentSubmenu() == GUIController.MENU_NONE) {
-				Main.SetState(Main.previous_state);
+				//Main.SetState(Main.previous_state);
+				//Main.SetState(Main.GetPreviousState());
+				Main.SetPreviousState();
 			}
 		}
 	}
@@ -295,7 +297,8 @@ public class ActionController {
 			//GUIController.SetSubMenu(null);
 			GUIController.ExitMenus();
 			GUIController.ExitSubmenus();
-			Main.SetState(Main.previous_state);
+			//Main.SetState(Main.previous_state);
+			Main.SetPreviousState();
 		}
 	}
 	
@@ -308,7 +311,8 @@ public class ActionController {
 			//GUIController.SetSubMenu(null);
 			GUIController.ExitMenus();
 			GUIController.ExitSubmenus();
-			Main.SetState(Main.previous_state);
+			//Main.SetState(Main.previous_state);
+			Main.SetPreviousState();
 		}
 	}
 	

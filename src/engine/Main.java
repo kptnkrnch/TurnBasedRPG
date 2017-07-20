@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 import locations.Location;
 import locations.LocationDictionary;
@@ -77,6 +78,8 @@ public class Main extends BasicGame {
 	
 	public static int previous_state = States.PAUSED;
 	public static int game_state = States.PAUSED;
+	
+	public static Stack<Integer> gameState = new Stack<Integer>();
 	
 	public static int input_device = InputController.KEYBOARD;
 	
@@ -203,6 +206,8 @@ public class Main extends BasicGame {
 		SaveGenerator.SaveGame("save2.save");
 		
 		game_state = States.RUNNING;
+		SetState(States.RUNNING);
+		SetState(States.RUNNING);
 	}
 	
 	/**
@@ -217,6 +222,7 @@ public class Main extends BasicGame {
 		}
 		if (GetPreviousState() == States.BATTLE) { // NOTE: may want to replace current state and previous state with a stack (like was done with menus)
 			CombatSystem.CleanupBattleWorld();
+			RemovePreviousState();
 		}
 		
 		Input input = gc.getInput();
@@ -245,11 +251,13 @@ public class Main extends BasicGame {
 		}
 		if (debug && input.isKeyPressed(Input.KEY_F2)) {
 			if (GetState() == States.RUNNING) {
-				Main.previous_state = Main.game_state;
-				Main.game_state = States.BATTLE;
+				//Main.previous_state = Main.game_state;
+				//Main.game_state = States.BATTLE;
+				SetState(States.BATTLE);
 			} else if (GetState() == States.BATTLE) {
-				Main.previous_state = Main.game_state;
-				Main.game_state = States.RUNNING;
+				//Main.previous_state = Main.game_state;
+				//Main.game_state = States.RUNNING;
+				SwapCurrentPreviousStates();
 			}
 			//Location loc = LocationDictionary.GetLocationByID(world.currentLocationID);
 			//MapLoader.LoadMap(world, loc.battlemapfile);
@@ -262,7 +270,7 @@ public class Main extends BasicGame {
 		}
 	}
 	
-	public static void SetState(int state) {
+	/*public static void SetState(int state) {
 		previous_state = game_state;
 		game_state = state;
 	}
@@ -273,7 +281,49 @@ public class Main extends BasicGame {
 	
 	public static int GetPreviousState() {
 		return previous_state;
+	}*/
+	
+	public static void SetState(int state) {
+		gameState.push(state);
 	}
+	
+	public static void SetPreviousState() {
+		gameState.pop();
+	}
+	
+	public static void SwapCurrentPreviousStates() {
+		int current = gameState.pop();
+		int previous = gameState.pop();
+		gameState.push(current);
+		gameState.push(previous);
+	}
+	
+	public static void RemovePreviousState() {
+		int current = gameState.pop();
+		int previous = gameState.pop();
+		if (gameState.empty()) {
+			gameState.push(current);
+		}
+		gameState.push(current);
+	}
+	
+	public static int GetState() {
+		if (gameState.empty()) {
+			return States.ERROR;
+		}
+		return gameState.peek();
+	}
+	
+	public static int GetPreviousState() {
+		if (gameState.empty()) {
+			return States.ERROR;
+		}
+		int temp = gameState.pop();
+		int val = gameState.peek();
+		gameState.push(temp);
+		return val;
+	}
+	
 	
 	public void keyPressed(int key, char c) {
 		if (GetState() == States.MENU && GUIController.GetCurrentMenu() == GUIController.MENU_CONTROLS

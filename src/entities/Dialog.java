@@ -36,7 +36,8 @@ public class Dialog {
 					if (world.entities.get(i).type == EntityDictionary.DIALOG_BOX) {
 						world.RemoveEntity(i);
 						Dialog.NPC_ID = -1l;
-						Main.SetState(States.RUNNING);
+						//Main.SetState(States.RUNNING);
+						Main.SetState(Main.GetPreviousState());
 						return false;
 					}
 				}
