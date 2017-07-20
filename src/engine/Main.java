@@ -268,6 +268,12 @@ public class Main extends BasicGame {
 				System.out.println(GUIController.menuQueue.get(i));
 			}
 		}
+		if (debug && input.isKeyPressed(Input.KEY_F4)) {
+			System.out.println("Game State Queue:");
+			for (int i = 0; i < Main.gameState.size(); i++) {
+				System.out.println(Main.gameState.get(i));
+			}
+		}
 	}
 	
 	/*public static void SetState(int state) {
