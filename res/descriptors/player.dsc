@@ -12,12 +12,12 @@ BeginEntity:
 	attack:10
 	defence:2
 	speed:1
-	criticalchance:0
+	criticalchance:0.0
 	dodgechance:0
 	level:1
 	exp:0
 	expnext:100
-	criticaldamage:0.0
+	criticalmodifier:0.0
 	cooldown:-53
 	abilities: {
 		BeginAbility:

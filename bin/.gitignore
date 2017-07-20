@@ -1,5 +1,9 @@
-/gameplay/
-/graphics/
+/locations/
+/network/
+/npc/
+/pathing/
+/quests/
+/savefiles/
+/sound/
 /engine/
-/input/
 /entities/
